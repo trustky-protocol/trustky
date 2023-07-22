@@ -16,6 +16,8 @@ import { useChainId } from '../../hooks/useChainId';
 import { useConfig } from '../../hooks/useConfig';
 import { QuestionMarkCircle } from 'heroicons-react';
 import AddAttestation from '../AddAttestation';
+import { useSession } from 'next-auth/react';
+import { createAttestation, createTestAttestation } from '../request';
 
 interface IFormValues {
   title?: string;
@@ -42,10 +44,28 @@ function ProfileForm({ callback }: { callback?: () => void }) {
   const { data: signer } = useSigner({
     chainId,
   });
+  const { data } = useSession();
+
+  const [wakatimeHandle, setWakatimeHandle] = useState<string | null>(null);
   const { isActiveDelegate } = useContext(StarterKitContext);
   const [activeLvlUpMenu, setActiveLvlUpMenu] = useState(0);
   const menuItems = [
-    { label: 'Github', content: <AddAttestation type='github' /> },
+    {
+      label: 'Github',
+      content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'github' }} />,
+    },
+    {
+      label: 'WakaTime',
+      content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'wakatime' }} />,
+    },
+    {
+      label: 'Upwork',
+      content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'upwork' }} />,
+    },
+    {
+      label: 'Malt',
+      content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'malt' }} />,
+    },
     { label: 'WorldCoin', content: <AddAttestation type='worldcoin' /> },
     { label: 'LinkedIn', content: <AddAttestation type='linkedIn' /> },
     { label: 'Upwork', content: <AddAttestation type='upwork' /> },
