@@ -79,8 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const attestation = await getAttestation(uid);
     console.log('attestation', attestation);
 
-    res.status(200).json({ recipient: recipient });
-    res.status(200).json({ uid: uid });
+    res.status(200).json({ recipient: recipient, uid: uid });
   } catch (error) {
     console.error('errorDebug', error);
     res.status(500).json('certificate creation failed');

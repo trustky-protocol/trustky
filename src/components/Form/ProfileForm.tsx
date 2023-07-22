@@ -16,6 +16,8 @@ import { useChainId } from '../../hooks/useChainId';
 import { useConfig } from '../../hooks/useConfig';
 import { QuestionMarkCircle } from 'heroicons-react';
 import AddAttestation from '../AddAttestation';
+import { useSession } from 'next-auth/react';
+import { createAttestation, createTestAttestation } from '../request';
 
 interface IFormValues {
   title?: string;
@@ -42,13 +44,28 @@ function ProfileForm({ callback }: { callback?: () => void }) {
   const { data: signer } = useSigner({
     chainId,
   });
+  const { data } = useSession();
+
+  const [wakatimeHandle, setWakatimeHandle] = useState<string | null>(null);
   const { isActiveDelegate } = useContext(StarterKitContext);
   const [activeLvlUpMenu, setActiveLvlUpMenu] = useState(0);
   const menuItems = [
-    { label: 'Github', content: <AddAttestation type='github' /> },
-    { label: 'LinkedIn', content: <AddAttestation type='linkedIn' /> },
-    { label: 'Upwork', content: <AddAttestation type='upwork' /> },
-    { label: 'Malt', content: <AddAttestation type='malt' /> },
+    {
+      label: 'Github',
+      content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'github' }} />,
+    },
+    {
+      label: 'WakaTime',
+      content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'wakatime' }} />,
+    },
+    {
+      label: 'Upwork',
+      content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'upwork' }} />,
+    },
+    {
+      label: 'Malt',
+      content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'malt' }} />,
+    },
   ];
 
   if (!user?.id) {
@@ -283,6 +300,24 @@ function ProfileForm({ callback }: { callback?: () => void }) {
             <dt className='font-medium'>{menuItems[activeLvlUpMenu].content}</dt>
           </div>
         </div>
+      </div>
+      <div className='flex align-middle justify-center align-middle'>
+        <button
+          onClick={() =>
+            createTestAttestation(user.address, data.accessToken, data.user?.id, wakatimeHandle)
+          }
+          className=' mt-3 block text-blue-600 bg-red-50 hover:bg-redpraha hover:text-white rounded-xl px-5 py-2.5 text-center'
+          type='button'
+          data-modal-toggle='defaultModal'>
+          Create Test Attestation
+        </button>
+        <button
+          onClick={() => createAttestation(user.address, data.accessToken, data.user?.id)}
+          className='mt-3 block text-blue-600 bg-red-50 hover:bg-redpraha hover:text-white rounded-xl px-5 py-2.5 text-center'
+          type='button'
+          data-modal-toggle='defaultModal'>
+          Create Attestation
+        </button>
       </div>
     </>
   );
