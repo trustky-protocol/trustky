@@ -5,6 +5,7 @@ import StarterKitContext from '../context/starterKit';
 import GithubLoginButton from '../modules/Eas/Github/componens/LoginButton';
 import { useSession } from 'next-auth/react';
 import WorldCoin from '../pages/worldcoin';
+import { BasicModal, openHandler } from './Modal';
 
 function AddAttestation(props: any) {
   const { user } = useContext(StarterKitContext);
@@ -19,6 +20,7 @@ function AddAttestation(props: any) {
 
   const handleAttestationCreation = async () => {
     setLoading(true);
+    // openHandler(true); // uncomment to open modal
     try {
       const result = await createAttestation(
         user.address,
@@ -48,6 +50,7 @@ function AddAttestation(props: any) {
     <>
       {loading && <Loading />}
       <p className={messageClass}>{message}</p>
+      <BasicModal />
       {props.type === 'github' && <GithubLoginButton />}
       {props.type === 'worldcoin' && <WorldCoin />}
       {props.type === 'github' && data && (

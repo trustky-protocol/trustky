@@ -18,7 +18,6 @@ function UserDetail({ user }: { user: IUser }) {
 
   return (
     <>
-      <AddAttestation />
 
       <div className='rounded-xl p-4 border border-gray-700 text-white bg-endnight'>
         <div className='flex'>
