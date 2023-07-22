@@ -66,6 +66,10 @@ function ProfileForm({ callback }: { callback?: () => void }) {
       label: 'Malt',
       content: <AddAttestation props={{ sharedState: setWakatimeHandle, type: 'malt' }} />,
     },
+    { label: 'WorldCoin', content: <AddAttestation type='worldcoin' /> },
+    { label: 'LinkedIn', content: <AddAttestation type='linkedIn' /> },
+    { label: 'Upwork', content: <AddAttestation type='upwork' /> },
+    { label: 'Malt', content: <AddAttestation type='malt' /> },
   ];
 
   if (!user?.id) {
