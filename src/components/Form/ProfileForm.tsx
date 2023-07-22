@@ -303,6 +303,7 @@ function ProfileForm({ callback }: { callback?: () => void }) {
       </div>
       <div className='flex align-middle justify-center align-middle'>
         <button
+          // disabled={!data?.user || !wakatimeHandle ? true : false} TODO: TEST YEET
           onClick={() =>
             createTestAttestation(user.address, data.accessToken, data.user?.id, wakatimeHandle)
           }
@@ -311,13 +312,13 @@ function ProfileForm({ callback }: { callback?: () => void }) {
           data-modal-toggle='defaultModal'>
           Create Test Attestation
         </button>
-        <button
+        {/* <button
           onClick={() => createAttestation(user.address, data.accessToken, data.user?.id)}
           className='mt-3 block text-blue-600 bg-red-50 hover:bg-redpraha hover:text-white rounded-xl px-5 py-2.5 text-center'
           type='button'
           data-modal-toggle='defaultModal'>
           Create Attestation
-        </button>
+        </button> */}
       </div>
     </>
   );
