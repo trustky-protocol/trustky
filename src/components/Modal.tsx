@@ -4,7 +4,7 @@ import { CheckIcon } from '@heroicons/react/24/outline';
 
 let openHandler: any;
 export default function BasicModal(props: any) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   openHandler = setOpen;
   return (
     <Transition.Root show={open} as={Fragment}>

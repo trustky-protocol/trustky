@@ -20,6 +20,7 @@ function AddAttestation(props: any) {
 
   const handleAttestationCreation = async () => {
     setLoading(true);
+    // openHandler(true); // uncomment to open modal
     try {
       const result = await createAttestation(
         user.address,
@@ -27,7 +28,6 @@ function AddAttestation(props: any) {
         data?.user?.id || 'missing-id',
       );
       console.log('result', result.data.uid);
-      openHandler(true);
 
       if (result.data.uid) {
         setMessage('Attestation created successfully');
@@ -50,6 +50,7 @@ function AddAttestation(props: any) {
     <>
       {loading && <Loading />}
       <p className={messageClass}>{message}</p>
+      <BasicModal />
       {props.type === 'github' && <GithubLoginButton />}
       {props.type === 'worldcoin' && <WorldCoin />}
       {props.type === 'github' && data && (
@@ -77,7 +78,6 @@ function AddAttestation(props: any) {
               data-modal-toggle='defaultModal'>
               Create Attestation
             </button>
-            <BasicModal handleCallback={handleAttestationCreation} />
           </div>
         </>
       )}
